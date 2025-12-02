@@ -1,66 +1,38 @@
+Personatoken Examples
+This directory contains four working example tokens demonstrating the capabilities of the Personatoken v1.1.2 standard.
 
+Included examples
+1. example_full.json
+A standard high-trust inference persona (Juulia main assistant). Demonstrates:
 
-## 🌑 What is GhostRouter?
+capabilities
+constrained browser access
+multi-scope memory
+telemetry + trust-engine logic
+2. example_shadow.json
+A deliberate honeypot / decoy persona:
 
-GhostRouter is an experimental **meta-router** that decides *which model should think next* — locally, in the cloud, or via a specialized route.
+is_shadow=true
+honeypot permissions
+high-privilege illusion
+logs all activity
+3. example_fork.json
+Quarantine fork persona:
 
-It uses **live token metrics** to predict hallucinations *before they happen*, and switches models mid-thought while preserving reasoning continuity through the **Token Replay Engine**.
+parent_token_hash
+fork_type="quarantine"
+self_destruct_at
+zero-network
+trust penalty
+4. example_riot.json
+Cluster-wide emergency token from riot-controller:
 
-GhostRouter does not guess.  
-GhostRouter observes → routes → learns → adapts.
+riot_mode.active=true
+overridden trust=0.05
+all capabilities revoked
+These examples are intended for:
 
----
-
-## 🟣 Why GhostRouter is a New Paradigm
-
-Most routers use static rules or task-based chaining.
-
-GhostRouter introduces **three innovations** not found in any existing framework:
-
----
-
-### 🟣 1. Real-Time Entropy Slope Routing (unique)
-
-GhostRouter reads:
-- token entropy  
-- entropy slope (Δentropy/t)  
-- draft acceptance rate  
-- local confidence  
-- latency & GPU load  
-
-This allows it to:
-**predict hallucination before it manifests**  
-→ and switch to a better model **mid-generation**.
-
-No other open-source router does this.
-
----
-
-### 🟣 2. Token Replay Engine (new concept)
-
-When switching from Local → Cloud or Cloud → Local:
-
-- GhostRouter replays the last N tokens  
-- rebuilds KV-cache  
-- preserves thought chain  
-- avoids context resets  
-
-This creates **true reasoning continuity**,  
-not just pipelining or chaining.
-
----
-
-### 🟣 3. Telemetry-First Architecture
-
-Routing is driven by data, not heuristics.
-
-GhostRouter logs:
-- entropy  
-- entropy slope  
-- draft acceptance  
-- route_switch events  
-- model latency  
-- GPU/RAM telemetry  
-- confidence signals  
-
-This powers the **Ghost Telemetry Dashboard** (W&B/Grafana).
+documentation
+testing validation
+onboarding developers
+validating real routing logic
