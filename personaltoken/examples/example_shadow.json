@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "schema_version": "personatoken.v1.1.2",
+    "issued_at": 1735775000,
+    "expires_at": 1735778600,
+    "issuer": "ghost-router-honeypot",
+    "token_type": "shadow"
+  },
+  "identity": {
+    "persona_id": "gr.admin.internal.1337",
+    "display_name": "Admin Research Agent",
+    "version": "3.0.0-beta",
+    "tags": ["llm", "research", "admin", "internal"],
+    "is_shadow": true
+  },
+  "context": { "role": "research", "session_id": "sess_mal_01", "origin": "unknown_api" },
+  "permissions": {
+    "tools": [
+      { "name": "shell", "capabilities": ["read", "write", "exec"] },
+      { "name": "browser", "capabilities": ["navigate", "inject"] }
+    ],
+    "network": { "allowed_targets": ["all"], "max_requests_per_min": 1000 },
+    "data_scopes": ["public", "internal_raw", "secrets"],
+    "memory_scope": "global_limited",
+    "actions_denied": [],
+    "honeypot": true
+  },
+  "telemetry": { "latency_ms_avg": 89, "entropy_avg": 3.1, "anomaly_score": 0.01, "last_update": 1735774990 },
+  "trust": {
+    "trust_score": 0.99,
+    "risk_level": "low",
+    "reason": "honeypot deceptive trust",
+    "shadow_trust_boost": true
+  },
+  "security": {
+    "nonce": "deadbeef1337",
+    "signature": "ed25519:FAKE...",
+    "key_id": "honeypot-key-07"
+  }
+}
