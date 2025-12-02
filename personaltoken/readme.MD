@@ -9,12 +9,12 @@ shadow/honeypot personas, quarantine forks, and riot-mode cluster lockdown.
 ## Files
 
 - **personatoken-v1.1.2.schema.json** – Formal JSON Schema
-- **examples/** – Valid example tokens
+- **examples** – Valid example tokens
 - **trust-engine-v4.md** – Reference trust-score logic
 
-## Features in v1.1.2
+ Features in v1.1.2
 
-### Identity
+##Identity
 - persona_id, display_name, version, tags  
 - shadow personas (honeypot / decoy)
 
