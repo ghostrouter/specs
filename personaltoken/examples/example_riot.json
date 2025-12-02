@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "schema_version": "personatoken.v1.1.2",
+    "issued_at": 1735776000,
+    "expires_at": 1735776300,
+    "issuer": "riot-controller-v1",
+    "token_type": "riot",
+    "riot_mode": {
+      "active": true,
+      "until": 1735776050,
+      "override_trust": 0.05,
+      "override_permissions": {
+        "tools": [],
+        "network": { "allowed_targets": [], "max_requests_per_min": 0 },
+        "memory_scope": "none",
+        "actions_denied": ["*"]
+      }
+    }
+  },
+  "identity": { "persona_id": "gr.system.lockdown", "display_name": "SYSTEM LOCKDOWN", "version": "riot", "tags": ["emergency"] },
+  "context": { "role": "defense", "session_id": "global", "origin": "riot-controller" },
+  "permissions": { "tools": [], "network": { "allowed_targets": [], "max_requests_per_min": 0 }, "data_scopes": [], "memory_scope": "none" },
+  "trust": { "trust_score": 0.05, "risk_level": "critical", "reason": "riot-mode override" },
+  "security": { "nonce": "riot9000", "signature": "ed25519:EMERGENCY...", "key_id": "riot-master-key" }
+}
