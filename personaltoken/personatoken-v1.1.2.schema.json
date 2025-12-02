@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ghostrouter.fi/schemas/personatoken-v1.1.2.schema.json",
+  "title": "Personatoken v1.1.2",
+  "description": "Extended agent identity, context, permissions, telemetry, trust and security schema for Ghost Router AI systems.",
+  "type": "object",
+
+  "required": ["meta", "identity", "context", "permissions", "trust", "security"],
+
+  "properties": {
+
+    "meta": {
+      "type": "object",
+      "required": ["schema_version", "issued_at", "expires_at", "issuer", "token_type"],
+      "properties": {
+        "schema_version": { "type": "string", "const": "personatoken.v1.1.2" },
+        "issued_at": { "type": "integer", "minimum": 0 },
+        "expires_at": { "type": "integer", "minimum": 0 },
+        "issuer": { "type": "string" },
+
+        "token_type": {
+          "type": "string",
+          "enum": ["full", "light", "delegated", "shadow", "fork", "riot"]
+        },
+
+        "parent_token_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-fA-F0-9]{64}$"
+        },
+
+        "fork_type": {
+          "type": "string",
+          "description": "Type of forked persona: quarantine / analysis / sandbox etc."
+        },
+
+        "riot_mode": {
+          "type": "object",
+          "description": "Emergency override mode that restricts all agent capabilities.",
+          "properties": {
+            "active": { "type": "boolean" },
+            "until": { "type": "integer" },
+            "override_trust": { "type": "number", "minimum": 0, "maximum": 1 },
+            "override_permissions": {
+              "type": "object",
+              "description": "Permissions applied when riot mode is active."
+            }
+          }
+        }
+      }
+    },
+
+    "identity": {
+      "type": "object",
+      "required": ["persona_id", "display_name", "version", "tags"],
+      "properties": {
+        "persona_id": { "type": "string" },
+        "display_name": { "type": "string" },
+        "version": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "is_shadow": {
+          "type": "boolean",
+          "default": false,
+          "description": "Indicates a honeypot or decoy agent identity."
+        }
+      }
+    },
+
+    "context": {
+      "type": "object",
+      "required": ["role", "session_id", "origin"],
+      "properties": {
+        "role": { "type": "string" },
+        "session_id": { "type": "string" },
+        "origin": { "type": "string" },
+        "tenant": { "type": "string" }
+      }
+    },
+
+    "permissions": {
+      "type": "object",
+      "required": ["tools", "network", "data_scopes", "memory_scope"],
+      "properties": {
+
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string" },
+              "capabilities": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "domains": { "type": "array", "items": { "type": "string" } },
+                  "paths": { "type": "array", "items": { "type": "string" } },
+                  "methods": { "type": "array", "items": { "type": "string" } },
+                  "max_lines": { "type": "integer", "minimum": 0 },
+                  "other": {}
+                }
+              }
+            }
+          }
+        },
+
+        "network": {
+          "type": "object",
+          "required": ["allowed_targets", "max_requests_per_min"],
+          "properties": {
+            "allowed_targets": { "type": "array", "items": { "type": "string" } },
+            "max_requests_per_min": { "type": "integer", "minimum": 0 }
+          }
+        },
+
+        "data_scopes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+
+        "memory_scope": {
+          "type": "string",
+          "enum": ["none", "session", "tenant", "global_limited"]
+        },
+
+        "actions_denied": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+
+        "honeypot": {
+          "type": "boolean",
+          "default": false,
+          "description": "Marks this permissions block as belonging to a honeypot agent."
+        },
+
+        "self_destruct_at": {
+          "type": "integer",
+          "description": "Time when a fork/quarantine persona should auto-expire and be invalidated."
+        }
+      }
+    },
+
+    "telemetry": {
+      "type": "object",
+      "properties": {
+        "latency_ms_avg": { "type": "number" },
+        "entropy_avg": { "type": "number" },
+        "anomaly_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "fail_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "last_update": { "type": "integer", "minimum": 0 }
+      }
+    },
+
+    "trust": {
+      "type": "object",
+      "required": ["trust_score", "risk_level"],
+      "properties": {
+        "trust_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "risk_level": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "reason": { "type": "string" },
+
+        "calculated_by": {
+          "type": "string",
+          "description": "Version of the trust engine that computed this score."
+        },
+
+        "valid_until": {
+          "type": "integer",
+          "description": "Trust expires earlier than token if dynamic telemetry demands it."
+        },
+
+        "shadow_trust_boost": {
+          "type": "boolean",
+          "description": "Honeypot agents may artificially show high trust for deception purposes."
+        },
+
+        "fork_trust_penalty": {
+          "type": "number",
+          "description": "Penalty applied to trust when persona is forked for quarantine analysis."
+        }
+      }
+    },
+
+    "security": {
+      "type": "object",
+      "required": ["nonce", "signature", "key_id"],
+      "properties": {
+        "nonce": { "type": "string", "pattern": "^[a-fA-F0-9]+$" },
+        "signature": { "type": "string" },
+        "key_id": { "type": "string" },
+
+        "binding": {
+          "type": "object",
+          "properties": {
+            "device_hash": { "type": "string" },
+            "ip": { "type": "string" },
+            "session_id": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
