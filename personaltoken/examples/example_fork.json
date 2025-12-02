@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "schema_version": "personatoken.v1.1.2",
+    "issued_at": 1735775100,
+    "expires_at": 1735777100,
+    "issuer": "ghost-router-core-v3",
+    "token_type": "fork",
+    "parent_token_hash": "sha256:9f86d0818...",
+    "fork_type": "quarantine"
+  },
+  "identity": {
+    "persona_id": "gr.juulia.quarantine.20251202-004",
+    "display_name": "Juulia (PDF quarantine)",
+    "version": "2.4.1",
+    "tags": ["llm", "quarantine", "pdf-analysis"],
+    "is_shadow": false
+  },
+  "context": { "role": "analysis", "session_id": "sess_8f3c9a1b", "origin": "sandbox" },
+  "permissions": {
+    "tools": [
+      { "name": "pdf_parser", "capabilities": ["full"] },
+      { "name": "yara_scanner", "capabilities": ["scan"] }
+    ],
+    "network": { "allowed_targets": ["none"], "max_requests_per_min": 0 },
+    "data_scopes": ["quarantine_only"],
+    "memory_scope": "none",
+    "actions_denied": ["*"],
+    "self_destruct_at": 1735775400
+  },
+  "trust": {
+    "trust_score": 0.42,
+    "risk_level": "high",
+    "reason": "quarantine persona",
+    "fork_trust_penalty": 0.56
+  },
+  "security": {
+    "nonce": "cafe1337fork",
+    "signature": "ed25519:XYZ...",
+    "key_id": "router-master-2025-01"
+  }
+}
