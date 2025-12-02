@@ -1,30 +1,66 @@
-# Ghost Router – Specification Index
 
-This repository contains specifications for the Ghost Router system.
-All specifications follow semantic versioning and are designed for
-AI-native Zero-Trust and multi-agent environments.
 
-## Current specifications
+## 🌑 What is GhostRouter?
 
-### /personatoken/
-Identity, permissions, telemetry, trust and delegation for agent personas.
-World’s first AI-native Zero-Trust Identity Standard.
+GhostRouter is an experimental **meta-router** that decides *which model should think next* — locally, in the cloud, or via a specialized route.
 
-### /trust-engine/ (planned)
-Formal evaluation logic for trust calculation.
+It uses **live token metrics** to predict hallucinations *before they happen*, and switches models mid-thought while preserving reasoning continuity through the **Token Replay Engine**.
 
-### /routing/ (planned)
-Agent routing graph and decision logic.
+GhostRouter does not guess.  
+GhostRouter observes → routes → learns → adapts.
 
-### /quarantine/ (planned)
-Sandbox/fork/quarantine persona behavior.
+---
 
-## Versioning
+## 🟣 Why GhostRouter is a New Paradigm
 
-- v1.x series = active draft standards
-- v2.0+ will introduce stable “GhostRouter Identity Protocol (GRIP)”
+Most routers use static rules or task-based chaining.
 
-## Roadmap
-- v1.2: delegation chains, cryptographic binding model
-- v1.3: tool-capability registry
-- v2.0: GRIP Protocol (Agent Identity over the wire)
+GhostRouter introduces **three innovations** not found in any existing framework:
+
+---
+
+### 🟣 1. Real-Time Entropy Slope Routing (unique)
+
+GhostRouter reads:
+- token entropy  
+- entropy slope (Δentropy/t)  
+- draft acceptance rate  
+- local confidence  
+- latency & GPU load  
+
+This allows it to:
+**predict hallucination before it manifests**  
+→ and switch to a better model **mid-generation**.
+
+No other open-source router does this.
+
+---
+
+### 🟣 2. Token Replay Engine (new concept)
+
+When switching from Local → Cloud or Cloud → Local:
+
+- GhostRouter replays the last N tokens  
+- rebuilds KV-cache  
+- preserves thought chain  
+- avoids context resets  
+
+This creates **true reasoning continuity**,  
+not just pipelining or chaining.
+
+---
+
+### 🟣 3. Telemetry-First Architecture
+
+Routing is driven by data, not heuristics.
+
+GhostRouter logs:
+- entropy  
+- entropy slope  
+- draft acceptance  
+- route_switch events  
+- model latency  
+- GPU/RAM telemetry  
+- confidence signals  
+
+This powers the **Ghost Telemetry Dashboard** (W&B/Grafana).
