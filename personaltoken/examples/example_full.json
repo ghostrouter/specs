@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "schema_version": "personatoken.v1.1.2",
+    "issued_at": 1735774800,
+    "expires_at": 1735778400,
+    "issuer": "ghost-router-core-v3",
+    "token_type": "full"
+  },
+  "identity": {
+    "persona_id": "gr.juulia.inference",
+    "display_name": "Juulia – Pääassistentti",
+    "version": "2.4.1",
+    "tags": ["llm", "assistant", "finnish", "safe"],
+    "is_shadow": false
+  },
+  "context": {
+    "role": "inference",
+    "session_id": "sess_8f3c9a1b",
+    "origin": "web_ui",
+    "tenant": "acme-corp"
+  },
+  "permissions": {
+    "tools": [
+      { "name": "browser", "capabilities": ["navigate", "read"], "constraints": { "domains": ["*.wikipedia.org", "*.gov.fi"] } },
+      { "name": "calculator", "capabilities": ["eval"] },
+      { "name": "memory", "capabilities": ["read", "write"] }
+    ],
+    "network": {
+      "allowed_targets": ["router_only", "docs-api"],
+      "max_requests_per_min": 120
+    },
+    "data_scopes": ["public", "internal_sanitized", "tenant_acme-corp"],
+    "memory_scope": "tenant",
+    "actions_denied": ["exec_code"]
+  },
+  "telemetry": {
+    "latency_ms_avg": 312.4,
+    "entropy_avg": 3.87,
+    "anomaly_score": 0.04,
+    "fail_rate": 0.002,
+    "last_update": 1735774790
+  },
+  "trust": {
+    "trust_score": 0.98,
+    "risk_level": "low",
+    "reason": "stable behavior, low entropy",
+    "calculated_by": "trust-engine-v4",
+    "valid_until": 1735861200
+  },
+  "security": {
+    "nonce": "a3f9c8e1b4d2",
+    "signature": "ed25519:MEUCIQ...",
+    "key_id": "router-master-2025-01",
+    "binding": {
+      "device_hash": "sha256:b17...",
+      "session_id": "sess_8f3c9a1b"
+    }
+  }
+}
